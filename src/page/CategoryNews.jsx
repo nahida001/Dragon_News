@@ -1,14 +1,42 @@
-import React from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useLoaderData, useParams } from 'react-router';
+import NewsCard from '../component/Homelayout/NewsCard';
 
 const CategoryNews = () => {
+    const [categoryNews,setcategoryNews]=useState([])
     const {id}=useParams();
-    console.log(id);
+    const data=useLoaderData();
+
+   // console.log(id,data);
+
+   useEffect(()=>{
+    if(id=="0"){
+        setcategoryNews(data);
+        return
+    }
+    else if(id=="1"){
+       const filternews=data.filter((news)=>news.others.is_today_pick==true)
+   setcategoryNews(filternews)
+    }else{
+     const filternews=data.filter((news)=>news.category_id==id)
+   
+    console.log(filternews);
+    setcategoryNews(filternews)
+    }
+     
+   },[data,id])
+   
     return (
         <div>
-          <h1>categoryNews-{id}</h1>
+            <h1 className='font-bold'>Dragon News</h1>
+             <div className='grid grid-cols-1 gap-1'>
+         {
+            categoryNews.map((news)=>(<NewsCard key={news.id} news={news}></NewsCard>))
+         }
             
         </div>
+        </div>
+       
     );
 };
 
