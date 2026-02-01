@@ -3,20 +3,21 @@ import { useLoaderData, useParams } from 'react-router';
 import NewsCard from '../component/Homelayout/NewsCard';
 
 const CategoryNews = () => {
-    const [categoryNews,setcategoryNews]=useState([])
+   
     const {id}=useParams();
     const data=useLoaderData();
-
+     const [categoryNews,setcategoryNews]=useState([])
    // console.log(id,data);
 
    useEffect(()=>{
     if(id == "0"){
         setcategoryNews(data);
-        return
+       
     }
     else if(id == "1"){
        const filternews=data.filter((news)=>news.others.is_today_pick==true)
    setcategoryNews(filternews)
+   
     }else{
      const filternews=data.filter((news)=>news.category_id==id)
    
